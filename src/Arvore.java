@@ -1,3 +1,8 @@
+/**
+ * Curso: Desenvolvimento de Sistemas
+ * Matéria: Estruturas de Dados II
+ * Desenvolvedor: Lucas Silva de Jesus
+ * */
 public class Arvore {
      private No raiz;
      
@@ -37,7 +42,8 @@ public class Arvore {
      }
 
      private int somaTudo(No Raiz){
-         if (Raiz==null) return 0;
+         if (Raiz==null)
+             return 0;
          if ((Raiz.getEsquerda()==null) && (Raiz.getDireita()==null))  // Folha
              return Raiz.getInformacao().getOcorrencia();
 

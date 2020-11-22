@@ -1,28 +1,37 @@
+/**
+ * Curso: Desenvolvimento de Sistemas
+ * Matéria: Estruturas de Dados II
+ * Desenvolvedor: Lucas Silva de Jesus
+ * */
 public class Huff {
-    public static void compactar(String arqEntrada, String arqSaida) throws Exception {
-        
-        // leitura dos dados do arquivo 
-        // String meuTexto = Arquivo.qualConteudo(arqEntrada);
-        
-        String meuTexto="Batatinha quando nasce";  
-        
+    private TabelaBinaria tabelaBinaria = new TabelaBinaria();
+    public static void compactar(String arquivoEntrada, String arquivoSaida) throws Exception {
+        Arquivo manipulacaoArquivo = new Arquivo(arquivoEntrada, arquivoSaida);
         // gerara tabela de ocorrencias
-        TabelaHuff tabela = Huff.gerarTabela(meuTexto);
+        Huff.gerarTabelaBinaria(manipulacaoArquivo);
+        TabelaHuff tabela = Huff.gerarTabelaBinaria(arquivoEntrada);
         Arvore arvHuff = Huff.gerarArvore(tabela);
         
         // gerar os códigos "BINARIO" para cada caracter em uma Lista
         TabelaBinaria tabConversao = Huff.gerarTabelaConversao(arvHuff);
         
         // releitura do texto convertendo pra codigo binário no BitSet
-        gerarArquivoCompactado(meuTexto, tabConversao, arqSaida );
+        gerarArquivoCompactado(arquivoEntrada, tabConversao, arquivoSaida );
         
     }
 
-    public static void descompactar(String arquivoEntrada, String arquivoSaida) throws Exception {
-    }
-    
-    private static TabelaHuff gerarTabela(String texto) {
+    private static TabelaHuff gerarTabelaBinaria(String meuTexto) {
         return null;
+    }
+
+    private static void gerarTabelaBinaria(Arquivo arquivo) throws Exception {
+        TabelaBinaria tabelaBinaria = new TabelaBinaria();
+        for (char caracter: new String(arquivo.getCaracteres()).toCharArray()) {
+            tabelaBinaria.incluirOcorrencia(new RegistroOcorrencia(caracter,Utils.quntasOcorrenciasDaLetra(caracter, arquivo)));
+        }
+    }
+
+    public static void descompactar(String arquivoEntrada, String arquivoSaida) throws Exception {
     }
     
     private static Arvore gerarArvore(TabelaHuff tabela) {
