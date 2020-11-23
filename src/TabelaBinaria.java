@@ -9,11 +9,11 @@ import java.util.stream.Collectors;
  * Desenvolvedor: Lucas Silva de Jesus
  * */
 public class TabelaBinaria {
-    private List<RegistroOcorrencia> listaRegistros = new ArrayList();
+    private List<No> listaRegistros = new ArrayList();
 
     public void incluirOcorrencia(RegistroOcorrencia registro) throws Exception {
         if (!letraJaContida(registro)) {
-            listaRegistros.add(registro);
+            listaRegistros.add(new No(registro));
         }
     }
 
@@ -21,11 +21,11 @@ public class TabelaBinaria {
         return listaRegistros.contains(registro);
     }
 
-    protected void organizarLista() {
-        listaRegistros.sort(Comparator.comparing(RegistroOcorrencia::getOcorrencia).reversed());
+    protected void organizarListaMaiorParaMenor() {
+        listaRegistros.sort(Comparator.comparing(No::getInformacao));
     }
 
-    public List<RegistroOcorrencia> getListaRegistros() {
+    public List<No> getListaRegistros() {
         return this.listaRegistros;
     }
 }

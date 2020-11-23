@@ -4,39 +4,46 @@
  * Desenvolvedor: Lucas Silva de Jesus
  * */
 public class Huff {
-    private TabelaBinaria tabelaBinaria = new TabelaBinaria();
     public static void compactar(String arquivoEntrada, String arquivoSaida) throws Exception {
         Arquivo manipulacaoArquivo = new Arquivo(arquivoEntrada, arquivoSaida);
         // gerara tabela de ocorrencias
-        Huff.gerarTabelaBinaria(manipulacaoArquivo);
-        //TabelaHuff tabela = Huff.gerarTabelaBinaria(arquivoEntrada);
-        //Arvore arvHuff = Huff.gerarArvore(tabela);
+        TabelaBinaria tabelaBinaria = Huff.gerarTabelaBinaria(manipulacaoArquivo);
+        TabelaHuff tabela = Huff.gerarArvoreBinaria(tabelaBinaria);
+        Arvore arvHuff = Huff.gerarArvore(tabela);
         
         // gerar os códigos "BINARIO" para cada caracter em uma Lista
-        //TabelaBinaria tabConversao = Huff.gerarTabelaConversao(arvHuff);
+        TabelaBinaria tabConversao = Huff.gerarTabelaConversao(arvHuff);
         
         // releitura do texto convertendo pra codigo binário no BitSet
-        //gerarArquivoCompactado(arquivoEntrada, tabConversao, arquivoSaida );
+        gerarArquivoCompactado(arquivoEntrada, tabConversao, arquivoSaida );
 
     }
 
-    private static TabelaHuff gerarTabelaBinaria(String meuTexto) {
+    private static TabelaHuff gerarArvoreBinaria(TabelaBinaria tabelaBinaria) throws Exception{
+        TabelaHuff tabelaHuff = new TabelaHuff();
+        for (int i = 0; i <= tabelaBinaria.getListaRegistros().size(); i+=2) {
+            RegistroOcorrencia registroAuxiliar = new RegistroOcorrencia(
+                    tabelaBinaria.getListaRegistros().get(i).getOcorrencia() +
+                    tabelaBinaria.getListaRegistros().get(i+1).getOcorrencia());
+
+
+            No noAuxiliar = new No(registroAuxiliar);
+            noAuxiliar.setEsquerda(new No(tabelaBinaria.getListaRegistros().get(i)));
+            noAuxiliar.setDireita(new No(tabelaBinaria.getListaRegistros().get(i+1)));
+
+        }
+
         return null;
     }
 
-    private static void gerarTabelaBinaria(Arquivo arquivo) throws Exception {
+    private static TabelaBinaria gerarTabelaBinaria(Arquivo arquivo) throws Exception {
         TabelaBinaria tabelaBinaria = new TabelaBinaria();
         for (char caracter: new String(arquivo.getCaracteres()).toCharArray()) {
             tabelaBinaria.incluirOcorrencia(new RegistroOcorrencia(caracter,Utils.quntasOcorrenciasDaLetra(caracter, arquivo)));
         }
 
-        tabelaBinaria.organizarLista();
-        for (RegistroOcorrencia ocorrencia: tabelaBinaria.getListaRegistros()) {
-            if (ocorrencia.getOcorrencia() == 197)
-                System.out.println("");
-            System.out.println(ocorrencia);
-        }
-
+        tabelaBinaria.organizarListaMaiorParaMenor();
+        return tabelaBinaria;
     }
 
     public static void descompactar(String arquivoEntrada, String arquivoSaida) throws Exception {

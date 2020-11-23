@@ -34,6 +34,9 @@ public class RegistroOcorrencia {
         return ocorrencia;
     }
 
+    /**
+     * Um caracter que tenha Zero(0) ocorrencias não deveria estar sendo apresentado no texto.
+     * */
     public void setOcorrencia(int ocorrencia) throws Exception {
         if (ocorrencia != 0) {
             this.ocorrencia = ocorrencia;
@@ -60,4 +63,5 @@ public class RegistroOcorrencia {
     public int hashCode() {
         return Objects.hash(caracter, ocorrencia);
     }
+
 }
