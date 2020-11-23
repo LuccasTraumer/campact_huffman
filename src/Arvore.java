@@ -10,7 +10,7 @@ public class Arvore {
          return this.raiz;
      }
 
-     public void incluir (char Car, int Qtos){
+     public void incluir (char Car, int Qtos) throws Exception{
          incluir(new No(new RegistroOcorrencia(Car,Qtos)));
      }
 

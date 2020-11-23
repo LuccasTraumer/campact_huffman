@@ -9,15 +9,15 @@ public class Huff {
         Arquivo manipulacaoArquivo = new Arquivo(arquivoEntrada, arquivoSaida);
         // gerara tabela de ocorrencias
         Huff.gerarTabelaBinaria(manipulacaoArquivo);
-        TabelaHuff tabela = Huff.gerarTabelaBinaria(arquivoEntrada);
-        Arvore arvHuff = Huff.gerarArvore(tabela);
+        //TabelaHuff tabela = Huff.gerarTabelaBinaria(arquivoEntrada);
+        //Arvore arvHuff = Huff.gerarArvore(tabela);
         
         // gerar os códigos "BINARIO" para cada caracter em uma Lista
-        TabelaBinaria tabConversao = Huff.gerarTabelaConversao(arvHuff);
+        //TabelaBinaria tabConversao = Huff.gerarTabelaConversao(arvHuff);
         
         // releitura do texto convertendo pra codigo binário no BitSet
-        gerarArquivoCompactado(arquivoEntrada, tabConversao, arquivoSaida );
-        
+        //gerarArquivoCompactado(arquivoEntrada, tabConversao, arquivoSaida );
+
     }
 
     private static TabelaHuff gerarTabelaBinaria(String meuTexto) {
@@ -29,6 +29,14 @@ public class Huff {
         for (char caracter: new String(arquivo.getCaracteres()).toCharArray()) {
             tabelaBinaria.incluirOcorrencia(new RegistroOcorrencia(caracter,Utils.quntasOcorrenciasDaLetra(caracter, arquivo)));
         }
+
+        tabelaBinaria.organizarLista();
+        for (RegistroOcorrencia ocorrencia: tabelaBinaria.getListaRegistros()) {
+            if (ocorrencia.getOcorrencia() == 197)
+                System.out.println("");
+            System.out.println(ocorrencia);
+        }
+
     }
 
     public static void descompactar(String arquivoEntrada, String arquivoSaida) throws Exception {

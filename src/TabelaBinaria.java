@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -8,24 +9,23 @@ import java.util.stream.Collectors;
  * Desenvolvedor: Lucas Silva de Jesus
  * */
 public class TabelaBinaria {
-    public List<RegistroOcorrencia> listaRegistros = new ArrayList();
+    private List<RegistroOcorrencia> listaRegistros = new ArrayList();
 
     public void incluirOcorrencia(RegistroOcorrencia registro) throws Exception {
-        if (!letraJaContida(registro.getCaracter())) {
+        if (!letraJaContida(registro)) {
             listaRegistros.add(registro);
         }
-        else {
-            throw new Exception("Registro a ser Incerido é Invalido");
-        }
-        organizarLista();
     }
 
-    private boolean letraJaContida(char letra) {
-        return listaRegistros.contains(letra);
+    private boolean letraJaContida(RegistroOcorrencia registro) {
+        return listaRegistros.contains(registro);
     }
 
-    private void organizarLista() {
-        List sortedList = listaRegistros.stream().sorted().collect(Collectors.toList());
-        listaRegistros = sortedList;
+    protected void organizarLista() {
+        listaRegistros.sort(Comparator.comparing(RegistroOcorrencia::getOcorrencia).reversed());
+    }
+
+    public List<RegistroOcorrencia> getListaRegistros() {
+        return this.listaRegistros;
     }
 }

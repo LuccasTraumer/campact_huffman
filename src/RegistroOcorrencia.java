@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 /**
  * Curso: Desenvolvimento de Sistemas
  * Matéria: Estruturas de Dados II
@@ -8,7 +10,6 @@ public class RegistroOcorrencia {
     private int ocorrencia;
     
     public RegistroOcorrencia(char caracter, int ocorrencia) throws Exception{
-
             this.caracter = caracter;
             setOcorrencia(ocorrencia);
 
@@ -39,5 +40,24 @@ public class RegistroOcorrencia {
         } else {
             throw new Exception("Ocorrencia Invalidá!");
         }
+    }
+
+    @Override
+    public String toString() {
+        return "caracter = " + caracter + ", ocorrencia = " + ocorrencia;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RegistroOcorrencia that = (RegistroOcorrencia) o;
+        return caracter == that.caracter &&
+                ocorrencia == that.ocorrencia;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(caracter, ocorrencia);
     }
 }
