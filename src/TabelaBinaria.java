@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Curso: Desenvolvimento de Sistemas
@@ -18,7 +17,13 @@ public class TabelaBinaria {
     }
 
     private boolean letraJaContida(RegistroOcorrencia registro) {
-        return listaRegistros.contains(registro);
+        for (No no: listaRegistros) {
+            if (no.getInformacao().getCaracter() == registro.getCaracter() &&
+                no.getInformacao().getOcorrencia() == registro.getOcorrencia()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     protected void organizarListaMaiorParaMenor() {

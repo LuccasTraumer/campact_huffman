@@ -5,7 +5,7 @@ import java.util.Objects;
  * Matéria: Estruturas de Dados II
  * Desenvolvedor: Lucas Silva de Jesus
  * */
-public class RegistroOcorrencia {
+public class RegistroOcorrencia implements Comparable<RegistroOcorrencia> {
     private char caracter;
     private int ocorrencia;
     
@@ -64,4 +64,17 @@ public class RegistroOcorrencia {
         return Objects.hash(caracter, ocorrencia);
     }
 
+    @Override
+    public int compareTo(RegistroOcorrencia ocorrencia) {
+        if (this.getOcorrencia() < ocorrencia.getOcorrencia())
+            return -666;
+        if (this.getOcorrencia() > ocorrencia.getOcorrencia())
+            return 666;
+
+        if (this.getOcorrencia() == ocorrencia.getOcorrencia() &&
+            this.getCaracter() == ocorrencia.getCaracter())
+            return 0;
+
+        return 0;
+    }
 }
