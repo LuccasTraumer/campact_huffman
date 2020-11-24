@@ -22,30 +22,6 @@ public class Huff {
 
     }
 
-    private static TabelaHuff gerarArvoreBinaria(TabelaBinaria tabelaBinaria) throws Exception{
-        Arvore arvore = new Arvore();
-        List<No> listaDeNoBase = new ArrayList<>();
-        for (int i = 0; i <= tabelaBinaria.getListaRegistros().size(); i+=2) {
-            No auxiliar = Huff.criarNoBase(i, tabelaBinaria);
-            listaDeNoBase.add(auxiliar);
-        }
-
-        return null;
-    }
-
-    private static No criarNoBase(int indice, TabelaBinaria tabela) throws Exception {
-        int proximoIndice = indice + 1;
-        RegistroOcorrencia registroAuxiliar = new RegistroOcorrencia(
-                tabela.getListaRegistros().get(indice).getInformacao().getOcorrencia() +
-                        tabela.getListaRegistros().get(proximoIndice).getInformacao().getOcorrencia());
-
-
-        No noAuxiliar = new No(registroAuxiliar);
-        noAuxiliar.setEsquerda(tabela.getListaRegistros().get(indice));
-        noAuxiliar.setDireita(tabela.getListaRegistros().get(proximoIndice));
-        return noAuxiliar;
-    }
-
     private static TabelaBinaria gerarTabelaBinaria(Arquivo arquivo) throws Exception {
         TabelaBinaria tabelaBinaria = new TabelaBinaria();
         for (char caracter: new String(arquivo.getCaracteres()).toCharArray()) {
@@ -54,6 +30,45 @@ public class Huff {
 
         tabelaBinaria.organizarListaMaiorParaMenor();
         return tabelaBinaria;
+    }
+
+    private static TabelaHuff gerarArvoreBinaria(TabelaBinaria tabelaBinaria) throws Exception{
+        Arvore arvore = new Arvore();
+        List<No> listaDeNoBase = new ArrayList<>();
+        if (tabelaBinaria.getListaRegistros().size() % 2 == 0) {
+            for (int i = 0; i <= tabelaBinaria.getListaRegistros().size()-2; i+=2) {
+                No auxiliar = Huff.criarNoBase(i, tabelaBinaria);
+                listaDeNoBase.add(auxiliar);
+            }
+        } else {
+            for (int i = 0; i <= tabelaBinaria.getListaRegistros().size(); i+=2) {
+                No auxiliar = Huff.criarNoBase(i, tabelaBinaria);
+                listaDeNoBase.add(auxiliar);
+            }
+        }
+
+        return null;
+    }
+
+    private static No criarNoBase(int indice, TabelaBinaria tabela) throws Exception {
+        int proximoIndice = indice + 1;
+        No noAuxiliar = null;
+
+        if (tabela.getListaRegistros().get(indice).getInformacao() != null &&
+                tabela.getListaRegistros().get(proximoIndice).getInformacao() != null) {
+            RegistroOcorrencia registroAuxiliar = new RegistroOcorrencia(
+                    tabela.getListaRegistros().get(indice).getInformacao().getOcorrencia() +
+                            tabela.getListaRegistros().get(proximoIndice).getInformacao().getOcorrencia());
+
+
+            noAuxiliar = new No(registroAuxiliar);
+            noAuxiliar.setEsquerda(tabela.getListaRegistros().get(indice));
+            noAuxiliar.setDireita(tabela.getListaRegistros().get(proximoIndice));
+        }
+
+        if (noAuxiliar == null)
+            throw new Exception("Index of out bound");
+        return noAuxiliar;
     }
 
     public static void descompactar(String arquivoEntrada, String arquivoSaida) throws Exception {
