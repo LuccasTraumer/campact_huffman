@@ -1,6 +1,3 @@
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Curso: Desenvolvimento de Sistemas
  * Matéria: Estruturas de Dados II
@@ -10,47 +7,60 @@ public class Huff {
     public static void compactar(String arquivoEntrada, String arquivoSaida) throws Exception {
         Arquivo manipulacaoArquivo = new Arquivo(arquivoEntrada, arquivoSaida);
         // gerara tabela de ocorrencias
-        TabelaBinaria tabelaBinaria = Huff.gerarTabelaBinaria(manipulacaoArquivo);
-        TabelaHuff tabela = Huff.gerarArvoreBinaria(tabelaBinaria);
-        Arvore arvHuff = Huff.gerarArvore(tabela);
+        ListaDados listaDados = Huff.gerarTabelaBinaria(manipulacaoArquivo);
+        ListaDados tabela = Huff.gerarListaRaizBinaria(listaDados);
+        Arvore arvoreDados = Huff.gerarArvore(listaDados);
         
         // gerar os códigos "BINARIO" para cada caracter em uma Lista
-        TabelaBinaria tabConversao = Huff.gerarTabelaConversao(arvHuff);
+        ListaDados tabConversao = Huff.gerarTabelaConversao(arvoreDados);
         
         // releitura do texto convertendo pra codigo binário no BitSet
         gerarArquivoCompactado(arquivoEntrada, tabConversao, arquivoSaida );
 
     }
 
-    private static TabelaBinaria gerarTabelaBinaria(Arquivo arquivo) throws Exception {
-        TabelaBinaria tabelaBinaria = new TabelaBinaria();
+    /**
+     * Cria a tabela Binaria Caracter e Ocorrencia.
+     * */
+    private static ListaDados gerarTabelaBinaria(Arquivo arquivo) throws Exception {
+        ListaDados listaDados = new ListaDados();
         for (char caracter: new String(arquivo.getCaracteres()).toCharArray()) {
-            tabelaBinaria.incluirOcorrencia(new RegistroOcorrencia(caracter,Utils.quntasOcorrenciasDaLetra(caracter, arquivo)));
+            listaDados.incluirOcorrencia(new RegistroOcorrencia(caracter,Utils.quntasOcorrenciasDaLetra(caracter, arquivo)));
         }
 
-        tabelaBinaria.organizarListaMaiorParaMenor();
-        return tabelaBinaria;
+        listaDados.organizarListaMaiorParaMenor();
+        return listaDados;
     }
 
-    private static TabelaHuff gerarArvoreBinaria(TabelaBinaria tabelaBinaria) throws Exception{
-        Arvore arvore = new Arvore();
-        List<No> listaDeNoBase = new ArrayList<>();
-        if (tabelaBinaria.getListaRegistros().size() % 2 == 0) {
-            for (int i = 0; i <= tabelaBinaria.getListaRegistros().size()-2; i+=2) {
-                No auxiliar = Huff.criarNoBase(i, tabelaBinaria);
-                listaDeNoBase.add(auxiliar);
+    /**
+     * Gera Arvore Binario. Vai criando o Nó que tem como ocorrencia a soma das folhas.
+     * */
+    private static ListaDados gerarListaRaizBinaria(ListaDados listaDados) throws Exception {
+
+        ListaDados listaAux = new ListaDados();
+        ListaDados copiaLista = new ListaDados(listaDados);
+        if (listaDados.getListaRegistros().size() % 2 == 0) {
+            for (int i = 0; i <= listaDados.getListaRegistros().size()-2; i+=2) {
+                No auxiliar = Huff.criarNoBase(i, listaDados);
+                listaAux.incluirNo(auxiliar);
+                Huff.removerNo(copiaLista.getListaRegistros().get(i), copiaLista);
+                Huff.removerNo(copiaLista.getListaRegistros().get(i), copiaLista);
             }
         } else {
-            for (int i = 0; i <= tabelaBinaria.getListaRegistros().size(); i+=2) {
-                No auxiliar = Huff.criarNoBase(i, tabelaBinaria);
-                listaDeNoBase.add(auxiliar);
+            for (int i = 0; i <= listaDados.getListaRegistros().size(); i+=2) {
+                No auxiliar = Huff.criarNoBase(i, listaDados);
+                listaAux.incluirNo(auxiliar);
+                Huff.removerNo(listaDados.getListaRegistros().get(i), listaDados);
+                Huff.removerNo(listaDados.getListaRegistros().get(i), listaDados);
             }
         }
-
-        return null;
+        return listaAux;
     }
 
-    private static No criarNoBase(int indice, TabelaBinaria tabela) throws Exception {
+    /**
+     * Gera um No que ira ser criado a parir do Indice forneceido e da tabela.
+     * */
+    private static No criarNoBase(int indice, ListaDados tabela) throws Exception {
         int proximoIndice = indice + 1;
         No noAuxiliar = null;
 
@@ -71,18 +81,26 @@ public class Huff {
         return noAuxiliar;
     }
 
+    private static void removerNo(No no, ListaDados tabela) throws Exception {
+        try {
+            tabela.removerNo(no);
+        } catch (Exception e) {
+            throw new Exception("Problema para remover No");
+        }
+    }
+
     public static void descompactar(String arquivoEntrada, String arquivoSaida) throws Exception {
     }
     
-    private static Arvore gerarArvore(TabelaHuff tabela) {
+    private static Arvore gerarArvore(ListaDados lista) {
         return null;
     }
     
-    private static TabelaBinaria gerarTabelaConversao(Arvore arvore) {
+    private static ListaDados gerarTabelaConversao(Arvore arvore) {
        return null;
     }
 
-    private static void gerarArquivoCompactado(String meuTexto, TabelaBinaria tabConversao,
+    private static void gerarArquivoCompactado(String meuTexto, ListaDados tabConversao,
                                                String arquivoSaida ) {
     
     }
