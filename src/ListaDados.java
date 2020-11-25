@@ -25,7 +25,8 @@ public class ListaDados {
     }
 
     public void removerNo(No no) throws Exception {
-        listaRegistros.remove(no);
+        if (listaRegistros.contains(no) && !listaRegistros.isEmpty())
+            listaRegistros.remove(no);
     }
 
     private boolean letraJaContida(RegistroOcorrencia registro) {

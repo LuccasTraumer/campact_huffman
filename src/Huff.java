@@ -7,7 +7,7 @@ public class Huff {
     public static void compactar(String arquivoEntrada, String arquivoSaida) throws Exception {
         Arquivo manipulacaoArquivo = new Arquivo(arquivoEntrada, arquivoSaida);
         // gerara tabela de ocorrencias
-        ListaDados listaDados = Huff.gerarTabelaBinaria(manipulacaoArquivo);
+         ListaDados listaDados = Huff.gerarTabelaBinaria(manipulacaoArquivo);
         ListaDados tabela = Huff.gerarListaRaizBinaria(listaDados);
         Arvore arvoreDados = Huff.gerarArvore(listaDados);
         
@@ -38,20 +38,20 @@ public class Huff {
     private static ListaDados gerarListaRaizBinaria(ListaDados listaDados) throws Exception {
 
         ListaDados listaAux = new ListaDados();
-        ListaDados copiaLista = new ListaDados(listaDados);
+        ListaDados registrosRemovidosDaLista = new ListaDados();
         if (listaDados.getListaRegistros().size() % 2 == 0) {
             for (int i = 0; i <= listaDados.getListaRegistros().size()-2; i+=2) {
                 No auxiliar = Huff.criarNoBase(i, listaDados);
                 listaAux.incluirNo(auxiliar);
-                Huff.removerNo(copiaLista.getListaRegistros().get(i), copiaLista);
-                Huff.removerNo(copiaLista.getListaRegistros().get(i), copiaLista);
+                registrosRemovidosDaLista.getListaRegistros().add(listaDados.getListaRegistros().get(i));
+                registrosRemovidosDaLista.getListaRegistros().add(listaDados.getListaRegistros().get(i+1));
             }
         } else {
             for (int i = 0; i <= listaDados.getListaRegistros().size(); i+=2) {
                 No auxiliar = Huff.criarNoBase(i, listaDados);
                 listaAux.incluirNo(auxiliar);
-                Huff.removerNo(listaDados.getListaRegistros().get(i), listaDados);
-                Huff.removerNo(listaDados.getListaRegistros().get(i), listaDados);
+                registrosRemovidosDaLista.getListaRegistros().add(listaDados.getListaRegistros().get(i));
+                registrosRemovidosDaLista.getListaRegistros().add(listaDados.getListaRegistros().get(i+1));
             }
         }
         return listaAux;
