@@ -29,4 +29,24 @@ public class No {
          return ""+ getInformacao();
      }
 
+    public No(No modelo) throws Exception {
+        if (modelo != null) {
+            this.informacao = modelo.informacao;
+            this.direita = modelo.direita;
+            this.esquerda = modelo.esquerda;
+        }
+        else
+            throw new Exception("Objeto Invalido para copia");
+    }
+
+    public Object clone() {
+            No aux = null;
+        try {
+            aux = new No(this);
+        } catch (Exception e) {
+        }
+
+        return aux;
+    }
+
 }

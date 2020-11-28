@@ -39,8 +39,12 @@ public class ListaDados {
         return false;
     }
 
-    protected void organizarListaMaiorParaMenor() {
+    protected void organizarListaMenorParaMaior() {
         listaRegistros.sort(Comparator.comparing(No::getInformacao));
+    }
+
+    protected void organizarListaMaiorParaMenor() {
+        listaRegistros.sort(Comparator.comparing(No::getInformacao).reversed());
     }
 
     public List<No> getListaRegistros() {
