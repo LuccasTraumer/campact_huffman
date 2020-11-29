@@ -10,7 +10,7 @@ import java.util.List;
 public class ListaDados {
     private List<No> listaRegistros;
 
-    public void incluirOcorrencia(RegistroOcorrencia registro) throws Exception {
+    public void incluirOcorrencia(Ocorrencia registro) throws Exception {
         if (!letraJaContida(registro)) {
             listaRegistros.add(new No(registro));
         }
@@ -25,11 +25,17 @@ public class ListaDados {
     }
 
     public void removerNo(No no) throws Exception {
-        if (listaRegistros.contains(no) && !listaRegistros.isEmpty())
-            listaRegistros.remove(no);
+        if (!listaRegistros.isEmpty() && no != null) {
+            for (No aux: listaRegistros) {
+                if (aux.getInformacao().getOcorrencia() == no.getInformacao().getOcorrencia() &&
+                    aux.getInformacao().getCaracter() == no.getInformacao().getCaracter())
+                    listaRegistros.remove(aux);
+                break;
+            }
+        }
     }
 
-    private boolean letraJaContida(RegistroOcorrencia registro) {
+    private boolean letraJaContida(Ocorrencia registro) {
         for (No no: listaRegistros) {
             if (no.getInformacao().getCaracter() == registro.getCaracter() &&
                 no.getInformacao().getOcorrencia() == registro.getOcorrencia()) {

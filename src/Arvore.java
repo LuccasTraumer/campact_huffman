@@ -11,7 +11,7 @@ public class Arvore {
      }
 
      public void incluir (char Car, int Qtos) throws Exception{
-         incluir(new No(new RegistroOcorrencia(Car,Qtos)));
+         incluir(new No(new Ocorrencia(Car,Qtos)));
      }
 
      public void incluir (No novo){

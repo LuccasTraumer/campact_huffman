@@ -5,20 +5,19 @@ import java.util.Objects;
  * Matéria: Estruturas de Dados II
  * Desenvolvedor: Lucas Silva de Jesus
  * */
-public class RegistroOcorrencia implements Comparable<RegistroOcorrencia> {
+public class Ocorrencia implements Comparable {
     private char caracter;
     private int ocorrencia;
     
-    public RegistroOcorrencia(char caracter, int ocorrencia) throws Exception{
+    public Ocorrencia(char caracter, int ocorrencia) throws Exception{
             this.caracter = caracter;
             setOcorrencia(ocorrencia);
-
     }
     /**
      * Construtor que irá receber a ocorrencia mas não irá armazenar nenhum caracter,
      * isso por conta das sub-arvores que não terão caracteres mas terão ocorrencias
      * */
-    public RegistroOcorrencia(int ocorrencia) throws Exception {
+    public Ocorrencia(int ocorrencia) throws Exception {
         this('\0', ocorrencia);
     }
 
@@ -54,7 +53,7 @@ public class RegistroOcorrencia implements Comparable<RegistroOcorrencia> {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        RegistroOcorrencia that = (RegistroOcorrencia) o;
+        Ocorrencia that = (Ocorrencia) o;
         return caracter == that.caracter &&
                 ocorrencia == that.ocorrencia;
     }
@@ -65,7 +64,8 @@ public class RegistroOcorrencia implements Comparable<RegistroOcorrencia> {
     }
 
     @Override
-    public int compareTo(RegistroOcorrencia ocorrencia) {
+    public int compareTo(Object obj) {
+        Ocorrencia ocorrencia = (Ocorrencia) obj;
         if (this.getOcorrencia() < ocorrencia.getOcorrencia())
             return -666;
         if (this.getOcorrencia() > ocorrencia.getOcorrencia())

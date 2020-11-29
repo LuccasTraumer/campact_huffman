@@ -5,23 +5,23 @@
  * */
 public class No {
         
-     private RegistroOcorrencia informacao;
+     private Ocorrencia informacao;
      
      private No esquerda, direita;   // Arvore
 
      
-     public No(RegistroOcorrencia info){
+     public No(Ocorrencia info){
          this.informacao = info;
          this.esquerda = this.direita = null;
      }
 
-     public void setInformacao(RegistroOcorrencia informacao){ this.informacao = informacao;}
+     public void setInformacao(Ocorrencia informacao){ this.informacao = informacao;}
    
      public void setDireita(No direita) { this.direita = direita;}
      public void setEsquerda(No esquerda) { this.esquerda = esquerda;}
 
 
-     public RegistroOcorrencia getInformacao() { return this.informacao;}
+     public Ocorrencia getInformacao() { return this.informacao;}
    
      public No getDireita() { return this.direita;}
      public No getEsquerda() { return this.esquerda;}
