@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
 /**
  * Curso: Desenvolvimento de Sistemas
@@ -14,10 +16,10 @@ public class Huff {
         Arvore arvoreDados = Huff.gerarArvore(tabela);
         
         // gerar os códigos "BINARIO" para cada caracter em uma Lista
-        ListaDados tabConversao = Huff.gerarTabelaConversao(arvoreDados);
+
         
         // releitura do texto convertendo pra codigo binário no BitSet
-        gerarArquivoCompactado(arquivoEntrada, tabConversao, arquivoSaida );
+
 
     }
 
@@ -37,57 +39,76 @@ public class Huff {
      * Gera Arvore Binario. Vai criando o Nó que tem como ocorrencia a soma das folhas.
      * */
     private static ListaDados gerarListaRaizBinaria(ListaDados listaDados) throws Exception {
-        ListaDados listaAux = new ListaDados();
+        ListaDados listaAux = (ListaDados) listaDados.clone();
         ListaDados listOrdenada = new ListaDados();
         ListaDados listSomaDosMenoresOcorrencias = new ListaDados();
-        if (numeroPar(listaDados.getListaRegistros().size())) {
-            for (int i = 0; i <= listaDados.getListaRegistros().size()-2; i+=2) {
-//                listOrdenada = ordenarLista(listaAux);
-                listSomaDosMenoresOcorrencias = somarNoComMenoresOcorrencias(listaDados);
-                listaAux = removerRegistroComMenoresOcorrencias(listaDados);
-            }
 
-        } else {
-            for (int i = 0; i <= listaDados.getListaRegistros().size(); i+=2) {
-                No auxiliar = Huff.criarNoBase(i, listaDados);
-                listaAux.incluirNo(auxiliar);
-            }
+        while(listaAux.getListaRegistros().size() != 1) {
+            listSomaDosMenoresOcorrencias = somarNoComMenoresOcorrencias(listaAux);
+            listaAux = removerRegistroComMenoresOcorrencias(listaDados, listSomaDosMenoresOcorrencias);
+            listaAux = juntarListasDeNoOrdenadas(listaAux, listSomaDosMenoresOcorrencias);
         }
-        System.out.println("");
+
+
         return listaAux;
     }
 
-    private static ListaDados removerRegistroComMenoresOcorrencias(ListaDados listaDados) throws Exception {
-        int menorOcorencia = qualMenorOcorrencia(listaDados);
-        ListaDados auxiliar = (ListaDados) listaDados.clone();
+    private static ListaDados juntarListasDeNoOrdenadas(ListaDados listaAux, ListaDados listSomaDosMenoresOcorrencias) {
+        ListaDados aux = new ListaDados();
+        for (No no: listSomaDosMenoresOcorrencias.getListaRegistros()) {
+            aux.incluirNo(no);
+        }
+        for (No no: listaAux.getListaRegistros()) {
+            aux.incluirNo(no);
+        }
+        aux.organizarListaMenorParaMaior();
+        return aux;
+    }
+
+
+    private static ListaDados removerRegistroComMenoresOcorrencias(ListaDados listaDados, ListaDados valoresASeremRemovidos) throws Exception {
+        ListaDados auxiliar = new ListaDados();
+        ListaDados clone = (ListaDados) listaDados.clone();
+        for (No no: valoresASeremRemovidos.getListaRegistros()) {
+            if(listaDados.getListaRegistros().contains(no.getDireita()) &&
+                    listaDados.getListaRegistros().contains(no.getEsquerda())) {
+                auxiliar.incluirNo(no.getDireita());
+                auxiliar.incluirNo(no.getEsquerda());
+            }
+        }
         for (No no: auxiliar.getListaRegistros()) {
-            if (no.getInformacao().getOcorrencia() == menorOcorencia)
-                auxiliar.removerNo(no);
+            clone.removerNo(no);
         }
 
-        return auxiliar;
+        return clone;
     }
 
     private static ListaDados somarNoComMenoresOcorrencias(ListaDados listaDados) throws Exception {
         int menorOcorrencia = qualMenorOcorrencia(listaDados);
+        List<No> elementosSeremRemovidos = new ArrayList<>();
         ListaDados listaAuxiliar = new ListaDados();
         listaDados.organizarListaMenorParaMaior();
         for (int i = 0; i <= listaDados.getListaRegistros().size()-2; i+=2) {
-            if (listaDados.getListaRegistros().get(i).getInformacao().getOcorrencia() == menorOcorrencia) {
+            if (listaDados.getListaRegistros().get(i).getInformacao().getOcorrencia() == menorOcorrencia &&
+                    listaDados.getListaRegistros().get(i+1).getInformacao().getOcorrencia() == menorOcorrencia) {
                 No auxiliar = Huff.criarNoBase(i, listaDados);
                 listaAuxiliar.incluirNo(auxiliar);
+                elementosSeremRemovidos.add(listaDados.getListaRegistros().get(i));
+                elementosSeremRemovidos.add(listaDados.getListaRegistros().get(i+1));
             }
             else
-                break;        }
+                break;
+        }
+
         return listaAuxiliar;
     }
 
-    private static ListaDados ordenarLista(ListaDados listaAux) {
-        ListaDados aux = new ListaDados();
-
-        aux = (ListaDados) listaAux.clone();
-
-        aux.organizarListaMenorParaMaior();
+    private static ListaDados removerElementos(List<No> elementosSeremRemovidos, ListaDados lista) throws Exception {
+        ListaDados aux = (ListaDados) lista.clone();
+        for (No no: elementosSeremRemovidos) {
+            if (lista.getListaRegistros().contains(no))
+                aux.removerNo(no);
+        }
         return aux;
     }
 
@@ -98,13 +119,6 @@ public class Huff {
                 value = no.getInformacao().getOcorrencia();
         }
         return value;
-    }
-
-    private static boolean numeroPar(int num) {
-        if (num % 2 == 0) {
-            return true;
-        }
-        return false;
     }
 
     /**
@@ -144,10 +158,6 @@ public class Huff {
         }
 
         return null;
-    }
-    
-    private static ListaDados gerarTabelaConversao(Arvore arvore) {
-       return null;
     }
 
     private static void gerarArquivoCompactado(String meuTexto, ListaDados tabConversao,
