@@ -80,7 +80,6 @@ public class Huff {
     private static Arvore gerarArvore(List<Ocorrencia> listaOcorrencias) throws Exception {
         List<Ocorrencia> auxiliar = new ArrayList<>(listaOcorrencias);
         List<Arvore> semiArvores = new ArrayList<>();
-        ListaDados test = new ListaDados();
         ListaDados listaEmNo = gerarListaEmNo(listaOcorrencias);
         int indice = 0;
         while (listaEmNo.getListaRegistros().size() != 1) {
@@ -92,9 +91,19 @@ public class Huff {
             Arvore arvoreAuxiliar = new Arvore();
             arvoreAuxiliar.incluir(nopBase);
             semiArvores.add(arvoreAuxiliar);
+            if (auxiliar.size() == 0)
+                auxiliar = atualizarAuxiliar(listaEmNo);
         }
 
         return null;
+    }
+
+    private static List<Ocorrencia> atualizarAuxiliar(ListaDados listaEmNo) {
+        List<Ocorrencia> auxiliar = new ArrayList<>();
+        for (No no: listaEmNo.getListaRegistros()) {
+            auxiliar.add(no.getInformacao());
+        }
+        return auxiliar;
     }
 
     private static ListaDados gerarListaEmNo(List<Ocorrencia> listaOcorrencias) throws Exception {
