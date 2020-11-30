@@ -5,7 +5,7 @@ import java.util.List;
  * Matéria: Estruturas de Dados II
  * Desenvolvedor: Lucas Silva de Jesus
  * */
-public class No {
+public class No implements Comparable<No> {
         
      private Ocorrencia informacao;
      
@@ -88,4 +88,16 @@ public class No {
         return aux;
     }
 
+    @Override
+    public int compareTo(No aux) {
+        if (this.getInformacao().getOcorrencia() < aux.getInformacao().getOcorrencia())
+            return -666;
+        if (this.getInformacao().getOcorrencia() > aux.getInformacao().getOcorrencia())
+            return 666;
+        if (this.getInformacao().getCaracter() == aux.getInformacao().getCaracter() &&
+            this.getInformacao().getOcorrencia() == aux.getInformacao().getOcorrencia())
+            return 0;
+
+        return 0;
+    }
 }

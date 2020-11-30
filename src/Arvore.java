@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -60,28 +61,72 @@ public class Arvore {
         ListaDados listaEmNo = ListaDados.gerarListaEmNo(listaOcorrencias);
         int menorOcorrencia = Ocorrencia.qualMenorOcorrencia(listaOcorrencias);
         int indice = 0;
-        List<Arvore> semiArvores = new ArrayList<>();
+        List<Arvore> semiArvores = gerarArvoresPopular(listaEmNo);
         while (listaEmNo.getListaRegistros().size() != 1) {
             No nopBase = No.gerarNoBase(indice, auxiliar);
             listaEmNo = ListaDados.removerNoLista(nopBase, listaEmNo);
             auxiliar = Ocorrencia.removerNoLista(nopBase, auxiliar);
+            semiArvores = Arvore.removerArvoreNoLista(nopBase, semiArvores);
             listaEmNo.incluirNo(nopBase);
-            listaEmNo.organizarListaMenorParaMaior();
             Arvore arvoreAuxiliar = new Arvore();
             arvoreAuxiliar.incluir(nopBase);
             semiArvores.add(arvoreAuxiliar);
+            listaEmNo.organizarListaMenorParaMaior();
+            semiArvores.sort(Comparator.comparing(Arvore::getRaiz));
             if (Ocorrencia.quantasRegistrosCom(menorOcorrencia, auxiliar) == 1 ||
                     Ocorrencia.quantasRegistrosCom(menorOcorrencia, auxiliar) == 0) {
                 auxiliar = Huff.atualizarAuxiliar(listaEmNo);
                 menorOcorrencia = Ocorrencia.qualMenorOcorrencia(auxiliar);
             }
         }
-        Arvore test = new Arvore();
-        test.incluir(listaEmNo.getListaRegistros().get(0));
         return auxiliar;
     }
 
-     public String toString(){
+    private static List<Arvore> gerarArvoresPopular(ListaDados listaEmNo) {
+         List<Arvore> auxiliar = new ArrayList<>();
+        for (No no: listaEmNo.getListaRegistros()) {
+            Arvore novaArvore = new Arvore();
+            novaArvore.incluir(no);
+            auxiliar.add(novaArvore);
+        }
+        return auxiliar;
+    }
+
+    private static List<Arvore> removerArvoreNoLista(No nopBase, List<Arvore> arvores) {
+        Arvore dadoDireita = new Arvore();
+        Arvore dadoEsquerda = new Arvore();
+        if (nopBase != null && !arvores.isEmpty()) {
+            if (nopBase.getDireita() != null && nopBase.getEsquerda() != null) {
+                 dadoDireita.incluir(nopBase.getDireita());
+                 dadoEsquerda.incluir(nopBase.getEsquerda());
+             }
+             if (existeArvoreIgual(dadoDireita, arvores))
+                 arvores = removerArvore(dadoDireita, arvores);
+             if (existeArvoreIgual(dadoEsquerda, arvores))
+                 arvores = removerArvore(dadoEsquerda, arvores);
+         }
+        return arvores;
+    }
+
+    private static List<Arvore> removerArvore(Arvore dado, List<Arvore> arvores) {
+        List<Arvore> auxiliar = new ArrayList<>();
+        for (Arvore arv: arvores) {
+            if (!dado.getRaiz().getInformacao().equals(arv.raiz.getInformacao())) {
+                auxiliar.add(arv);
+            }
+        }
+        return auxiliar;
+    }
+
+    private static boolean existeArvoreIgual(Arvore dado, List<Arvore> arvores) {
+        for (Arvore auxiliar: arvores) {
+            if (dado.getRaiz().getInformacao().equals(auxiliar.raiz.getInformacao()))
+                return true;
+        }
+        return false;
+    }
+
+    public String toString(){
          return visita(this.raiz);
      }
 
@@ -93,5 +138,4 @@ public class Arvore {
                  Raiz.getInformacao() + " " +     // IN-ORDEM
                  visita(Raiz.getDireita());
      }
-    
 }
