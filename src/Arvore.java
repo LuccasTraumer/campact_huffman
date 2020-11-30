@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Curso: Desenvolvimento de Sistemas
  * Matéria: Estruturas de Dados II
@@ -51,6 +54,32 @@ public class Arvore {
                 somaTudo(Raiz.getEsquerda()) +
                 somaTudo(Raiz.getDireita()) + Raiz.getInformacao().getOcorrencia();
      }
+
+    static List<Ocorrencia> gerarArvore(List<Ocorrencia> listaOcorrencias) throws Exception {
+        List<Ocorrencia> auxiliar = new ArrayList<>(listaOcorrencias);
+        ListaDados listaEmNo = ListaDados.gerarListaEmNo(listaOcorrencias);
+        int menorOcorrencia = Ocorrencia.qualMenorOcorrencia(listaOcorrencias);
+        int indice = 0;
+        List<Arvore> semiArvores = new ArrayList<>();
+        while (listaEmNo.getListaRegistros().size() != 1) {
+            No nopBase = No.gerarNoBase(indice, auxiliar);
+            listaEmNo = ListaDados.removerNoLista(nopBase, listaEmNo);
+            auxiliar = Ocorrencia.removerNoLista(nopBase, auxiliar);
+            listaEmNo.incluirNo(nopBase);
+            listaEmNo.organizarListaMenorParaMaior();
+            Arvore arvoreAuxiliar = new Arvore();
+            arvoreAuxiliar.incluir(nopBase);
+            semiArvores.add(arvoreAuxiliar);
+            if (Ocorrencia.quantasRegistrosCom(menorOcorrencia, auxiliar) == 1 ||
+                    Ocorrencia.quantasRegistrosCom(menorOcorrencia, auxiliar) == 0) {
+                auxiliar = Huff.atualizarAuxiliar(listaEmNo);
+                menorOcorrencia = Ocorrencia.qualMenorOcorrencia(auxiliar);
+            }
+        }
+        Arvore test = new Arvore();
+        test.incluir(listaEmNo.getListaRegistros().get(0));
+        return auxiliar;
+    }
 
      public String toString(){
          return visita(this.raiz);

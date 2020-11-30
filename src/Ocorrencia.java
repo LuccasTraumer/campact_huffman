@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -19,6 +21,53 @@ public class Ocorrencia implements Comparable {
      * */
     public Ocorrencia(int ocorrencia) throws Exception {
         this('\0', ocorrencia);
+    }
+
+    /**
+     * Cria a tabela Binaria Caracter e Ocorrencia.
+     * */
+    public static List<Ocorrencia> gerarListaOcorrencias(Arquivo arquivo) throws Exception {
+        List<Ocorrencia> ocorrencias = new ArrayList<>();
+        for (char caracter: new String(arquivo.getCaracteres()).toCharArray()) {
+            Ocorrencia ocorrenciaAuxiliar = new Ocorrencia(caracter,Utils.quntasOcorrenciasDaLetra(caracter, arquivo));
+            if(!ocorrencias.contains(ocorrenciaAuxiliar))
+                ocorrencias.add(new Ocorrencia(caracter,Utils.quntasOcorrenciasDaLetra(caracter, arquivo)));
+        }
+        return ocorrencias;
+    }
+
+    static int quantasRegistrosCom(int menorOcorrencia, List<Ocorrencia> lista) {
+        int contador = 0;
+        for (Ocorrencia ocorrencia: lista) {
+            if (ocorrencia.getOcorrencia() == menorOcorrencia)
+                contador++;
+        }
+        return contador;
+    }
+
+    static int qualMenorOcorrencia(List<Ocorrencia> listaOcorrencias) {
+        int value = Integer.MAX_VALUE;
+        for (Ocorrencia ocorrencia: listaOcorrencias) {
+            if (ocorrencia.getOcorrencia() < value)
+                value = ocorrencia.getOcorrencia();
+        }
+        return value;
+    }
+
+    static List<Ocorrencia> removerNoLista(No no, List<Ocorrencia> listaOcorrencias) {
+        if (no != null && !listaOcorrencias.isEmpty() && listaOcorrencias.size() > 1){
+            if (no.getEsquerda() != null) {
+                if (listaOcorrencias.contains(no.getEsquerda().getInformacao()))
+                    listaOcorrencias.remove(no.getEsquerda().getInformacao());
+            }
+        }
+        if (no != null && !listaOcorrencias.isEmpty() && listaOcorrencias.size() > 1){
+            if (no.getDireita() != null) {
+                if (listaOcorrencias.contains(no.getDireita().getInformacao()))
+                    listaOcorrencias.remove(no.getDireita().getInformacao());
+            }
+        }
+        return listaOcorrencias;
     }
 
     public char getCaracter() {

@@ -35,6 +35,21 @@ public class ListaDados {
         }
     }
 
+    static ListaDados removerNoLista(No no, ListaDados lista) throws Exception {
+        if (no != null)
+            lista.removerNo(no.getEsquerda());
+        if (no != null)
+            lista.removerNo(no.getDireita());
+        return lista;
+    }
+    static ListaDados gerarListaEmNo(List<Ocorrencia> listaOcorrencias) throws Exception {
+        ListaDados auxiliar = new ListaDados();
+        for (Ocorrencia ocorrencia: listaOcorrencias) {
+            auxiliar.incluirOcorrencia(ocorrencia);
+        }
+        return auxiliar;
+    }
+
     private boolean letraJaContida(Ocorrencia registro) {
         for (No no: listaRegistros) {
             if (no.getInformacao().getCaracter() == registro.getCaracter() &&

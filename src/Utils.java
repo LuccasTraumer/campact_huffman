@@ -1,3 +1,5 @@
+import java.util.List;
+
 public class Utils {
 
     private Utils() { }
@@ -9,5 +11,14 @@ public class Utils {
         }
 
         return contadorOcorrencia;
+    }
+
+    static int quantasOcorrenciasComMenorValor(int menorValor, List<Ocorrencia> auxiliar) {
+        int count = 0;
+        for (Ocorrencia ocorencia: auxiliar) {
+            if (ocorencia.getOcorrencia() == menorValor)
+                count++;
+        }
+        return count;
     }
 }

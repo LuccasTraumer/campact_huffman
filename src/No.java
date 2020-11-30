@@ -1,3 +1,5 @@
+import java.util.List;
+
 /**
  * Curso: Desenvolvimento de Sistemas
  * Matéria: Estruturas de Dados II
@@ -14,6 +16,43 @@ public class No {
          this.informacao = info;
          this.esquerda = this.direita = null;
      }
+
+    /**
+     * Gera Arvore Binario. Vai criando o Nó que tem como ocorrencia a soma das folhas.
+     * */
+    static ListaDados geraListaNo(List<Ocorrencia> ocorrencias) throws Exception {
+        ListaDados auxiliar = new ListaDados();
+        for (Ocorrencia ocorrencia: ocorrencias) {
+            No no = new No(ocorrencia);
+            auxiliar.incluirNo(no);
+        }
+        return auxiliar;
+    }
+
+    static No gerarNoBase(int indice, List<Ocorrencia> auxiliar) throws Exception {
+        No noBase = null;
+
+        if (auxiliar.get(indice) != null && auxiliar.get(indice+1)!= null) {
+            Ocorrencia ocorrenciaAtual = auxiliar.get(indice);
+            Ocorrencia proximoOcorrencia = auxiliar.get(indice + 1);
+            int quantasOcorrenciasComMenorValor = Utils.quantasOcorrenciasComMenorValor(Ocorrencia.qualMenorOcorrencia(auxiliar), auxiliar);
+            if (ocorrenciaAtual.getOcorrencia() == proximoOcorrencia.getOcorrencia()) {
+                Ocorrencia ocorrenciaRaiz = new Ocorrencia(ocorrenciaAtual.getOcorrencia() + proximoOcorrencia.getOcorrencia());
+                noBase = new No(ocorrenciaRaiz);
+                noBase.setDireita(new No(proximoOcorrencia));
+                noBase.setEsquerda(new No(ocorrenciaAtual));
+            } else if (auxiliar.get(indice) != null) {
+                noBase = new No(auxiliar.get(indice));
+            }
+            if (quantasOcorrenciasComMenorValor == 1 && ocorrenciaAtual.getOcorrencia() != proximoOcorrencia.getOcorrencia()) {
+                Ocorrencia ocorrenciaRaiz = new Ocorrencia(ocorrenciaAtual.getOcorrencia() + proximoOcorrencia.getOcorrencia());
+                noBase = new No(ocorrenciaRaiz);
+                noBase.setDireita(new No(proximoOcorrencia));
+                noBase.setEsquerda(new No(ocorrenciaAtual));
+            }
+        }
+        return noBase;
+    }
 
      public void setInformacao(Ocorrencia informacao){ this.informacao = informacao;}
    
