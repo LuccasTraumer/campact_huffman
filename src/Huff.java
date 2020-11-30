@@ -18,7 +18,7 @@ public class Huff {
         // gera lista de Nó com a soma de Ocorencia das Folhas
 
         Arvore arvoreDados = Huff.gerarArvore(listaDados);
-        
+
         // gerar os códigos "BINARIO" para cada caracter em uma Lista
 
         // releitura do texto convertendo pra codigo binário no BitSet
@@ -76,12 +76,13 @@ public class Huff {
             throw new Exception("Index of out bound");
         return noAuxiliar;
     }
-    
+
     private static Arvore gerarArvore(List<Ocorrencia> listaOcorrencias) throws Exception {
         List<Ocorrencia> auxiliar = new ArrayList<>(listaOcorrencias);
         List<Arvore> semiArvores = new ArrayList<>();
         ListaDados listaEmNo = gerarListaEmNo(listaOcorrencias);
         int indice = 0;
+        int menorOcorrencia = qualMenorOcorrencia(listaOcorrencias);
         while (listaEmNo.getListaRegistros().size() != 1) {
             No nopBase = gerarNoBase(indice, auxiliar);
             listaEmNo = removerNoLista(nopBase, listaEmNo);
@@ -91,11 +92,31 @@ public class Huff {
             Arvore arvoreAuxiliar = new Arvore();
             arvoreAuxiliar.incluir(nopBase);
             semiArvores.add(arvoreAuxiliar);
-            if (auxiliar.size() == 0)
+            if (quantasRegistrosCom(menorOcorrencia, auxiliar) == 1 ||
+                    quantasRegistrosCom(menorOcorrencia, auxiliar) == 0) {
                 auxiliar = atualizarAuxiliar(listaEmNo);
+                menorOcorrencia = qualMenorOcorrencia(auxiliar);
+            }
         }
 
-        return null;
+        return auxiliar;
+    }
+
+    private static int quantasRegistrosCom(int menorOcorrencia, List<Ocorrencia> lista) {
+        int contador = 0;
+        for (Ocorrencia ocorrencia: lista) {
+            if (ocorrencia.getOcorrencia() == menorOcorrencia)
+                contador++;
+        }
+        return contador;
+    }
+    private static int qualMenorOcorrencia(List<Ocorrencia> listaOcorrencias) {
+        int value = Integer.MAX_VALUE;
+        for (Ocorrencia ocorrencia: listaOcorrencias) {
+            if (ocorrencia.getOcorrencia() < value)
+                value = ocorrencia.getOcorrencia();
+        }
+        return value;
     }
 
     private static List<Ocorrencia> atualizarAuxiliar(ListaDados listaEmNo) {
@@ -115,10 +136,18 @@ public class Huff {
     }
 
     private static List<Ocorrencia> removerNoLista(No no, List<Ocorrencia> listaOcorrencias) {
-        if (no != null && listaOcorrencias.contains(no.getEsquerda().getInformacao()))
-            listaOcorrencias.remove(no.getEsquerda().getInformacao());
-        if (no != null && listaOcorrencias.contains(no.getDireita().getInformacao()))
-            listaOcorrencias.remove(no.getDireita().getInformacao());
+        if (no != null && !listaOcorrencias.isEmpty() && listaOcorrencias.size() > 1){
+            if (no.getEsquerda() != null) {
+                if (listaOcorrencias.contains(no.getEsquerda().getInformacao()))
+                    listaOcorrencias.remove(no.getEsquerda().getInformacao());
+            }
+        }
+        if (no != null && !listaOcorrencias.isEmpty() && listaOcorrencias.size() > 1){
+            if (no.getDireita() != null) {
+                if (listaOcorrencias.contains(no.getDireita().getInformacao()))
+                    listaOcorrencias.remove(no.getDireita().getInformacao());
+            }
+        }
         return listaOcorrencias;
     }
 
@@ -136,6 +165,7 @@ public class Huff {
         if (auxiliar.get(indice) != null && auxiliar.get(indice+1)!= null) {
             Ocorrencia ocorrenciaAtual = auxiliar.get(indice);
             Ocorrencia proximoOcorrencia = auxiliar.get(indice + 1);
+            int quantasOcorrenciasComMenorValor = quantasOcorrenciasComMenorValor(qualMenorOcorrencia(auxiliar), auxiliar);
             if (ocorrenciaAtual.getOcorrencia() == proximoOcorrencia.getOcorrencia()) {
                 Ocorrencia ocorrenciaRaiz = new Ocorrencia(ocorrenciaAtual.getOcorrencia() + proximoOcorrencia.getOcorrencia());
                 noBase = new No(ocorrenciaRaiz);
@@ -144,13 +174,28 @@ public class Huff {
             } else if (auxiliar.get(indice) != null) {
                 noBase = new No(auxiliar.get(indice));
             }
+            if (quantasOcorrenciasComMenorValor == 1 && ocorrenciaAtual.getOcorrencia() != proximoOcorrencia.getOcorrencia()) {
+                Ocorrencia ocorrenciaRaiz = new Ocorrencia(ocorrenciaAtual.getOcorrencia() + proximoOcorrencia.getOcorrencia());
+                noBase = new No(ocorrenciaRaiz);
+                noBase.setDireita(new No(proximoOcorrencia));
+                noBase.setEsquerda(new No(ocorrenciaAtual));
+            }
         }
         return noBase;
     }
 
+    private static int quantasOcorrenciasComMenorValor(int menorValor, List<Ocorrencia> auxiliar) {
+        int count = 0;
+        for (Ocorrencia ocorencia: auxiliar) {
+            if (ocorencia.getOcorrencia() == menorValor)
+                count++;
+        }
+        return count;
+    }
+
     private static void gerarArquivoCompactado(String meuTexto, ListaDados tabConversao,
                                                String arquivoSaida ) {
-    
+
     }
 
     public static void descompactar(String arquivoEntrada, String arquivoSaida) throws Exception {
