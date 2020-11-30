@@ -77,7 +77,7 @@ public class Huff {
         return noAuxiliar;
     }
 
-    private static Arvore gerarArvore(List<Ocorrencia> listaOcorrencias) throws Exception {
+    private static List<Ocorrencia> gerarArvore(List<Ocorrencia> listaOcorrencias) throws Exception {
         List<Ocorrencia> auxiliar = new ArrayList<>(listaOcorrencias);
         List<Arvore> semiArvores = new ArrayList<>();
         ListaDados listaEmNo = gerarListaEmNo(listaOcorrencias);
