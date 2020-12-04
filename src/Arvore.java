@@ -56,32 +56,6 @@ public class Arvore {
                 somaTudo(Raiz.getDireita()) + Raiz.getInformacao().getOcorrencia();
      }
 
-    static List<Ocorrencia> gerarArvore(List<Ocorrencia> listaOcorrencias) throws Exception {
-        List<Ocorrencia> auxiliar = new ArrayList<>(listaOcorrencias);
-        ListaDados listaEmNo = ListaDados.gerarListaEmNo(listaOcorrencias);
-        int menorOcorrencia = Ocorrencia.qualMenorOcorrencia(listaOcorrencias);
-        int indice = 0;
-        List<Arvore> semiArvores = gerarArvoresPopular(listaEmNo);
-        while (listaEmNo.getListaRegistros().size() != 1) {
-            No nopBase = No.gerarNoBase(indice, auxiliar);
-            listaEmNo = ListaDados.removerNoLista(nopBase, listaEmNo);
-            auxiliar = Ocorrencia.removerNoLista(nopBase, auxiliar);
-            semiArvores = Arvore.removerArvoreNoLista(nopBase, semiArvores);
-            listaEmNo.incluirNo(nopBase);
-            Arvore arvoreAuxiliar = new Arvore();
-            arvoreAuxiliar.incluir(nopBase);
-            semiArvores.add(arvoreAuxiliar);
-            listaEmNo.organizarListaMenorParaMaior();
-            semiArvores.sort(Comparator.comparing(Arvore::getRaiz));
-            if (Ocorrencia.quantasRegistrosCom(menorOcorrencia, auxiliar) == 1 ||
-                    Ocorrencia.quantasRegistrosCom(menorOcorrencia, auxiliar) == 0) {
-                auxiliar = Huff.atualizarAuxiliar(listaEmNo);
-                menorOcorrencia = Ocorrencia.qualMenorOcorrencia(auxiliar);
-            }
-        }
-        return auxiliar;
-    }
-
     private static List<Arvore> gerarArvoresPopular(ListaDados listaEmNo) {
          List<Arvore> auxiliar = new ArrayList<>();
         for (No no: listaEmNo.getListaRegistros()) {

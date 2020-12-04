@@ -45,11 +45,11 @@ public class Ocorrencia implements Comparable {
         return contador;
     }
 
-    static int qualMenorOcorrencia(List<Ocorrencia> listaOcorrencias) {
+    static int qualMenorOcorrencia(List<Arvore> listaArvores) {
         int value = Integer.MAX_VALUE;
-        for (Ocorrencia ocorrencia: listaOcorrencias) {
-            if (ocorrencia.getOcorrencia() < value)
-                value = ocorrencia.getOcorrencia();
+        for (Arvore arvore: listaArvores) {
+            if (arvore.getRaiz().getInformacao().getOcorrencia() < value)
+                value = arvore.getRaiz().getInformacao().getOcorrencia();
         }
         return value;
     }

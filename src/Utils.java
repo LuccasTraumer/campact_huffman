@@ -13,10 +13,10 @@ public class Utils {
         return contadorOcorrencia;
     }
 
-    static int quantasOcorrenciasComMenorValor(int menorValor, List<Ocorrencia> auxiliar) {
+    static int quantasOcorrenciasComMenorValor(int menorValor, List<Arvore> listaArvores) {
         int count = 0;
-        for (Ocorrencia ocorencia: auxiliar) {
-            if (ocorencia.getOcorrencia() == menorValor)
+        for (Arvore arvore: listaArvores) {
+            if (arvore.getRaiz().getInformacao().getOcorrencia() == menorValor)
                 count++;
         }
         return count;

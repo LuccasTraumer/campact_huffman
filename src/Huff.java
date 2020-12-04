@@ -14,13 +14,14 @@ public class Huff {
          List<Ocorrencia> listaDados = Ocorrencia.gerarListaOcorrencias(manipulacaoArquivo);
          listaDados.sort(Comparator.comparing(Ocorrencia::getOcorrencia));
          // gera uma Lista de Nó
-        List<Ocorrencia> arvoreDados = Arvore.gerarArvore(listaDados);
+        TabelaHuff tabelaHuff = new TabelaHuff(listaDados);
+        tabelaHuff.gerarArvore();
         // gerar os códigos "BINARIO" para cada caracter em uma Lista
-        List<CodigoBinario> listaCodigoBinario = gerarBinarios(arvoreDados);
+        List<CodigoBinario> listaCodigoBinario = gerarBinarios(tabelaHuff.gerarArvore());
         // releitura do texto convertendo pra codigo binário no BitSet
     }
 
-    private static List<CodigoBinario> gerarBinarios(List<Ocorrencia> arvoreDados) {
+    private static List<CodigoBinario> gerarBinarios(List<Arvore> arvoreDados) {
         List<CodigoBinario> auxiliar = new ArrayList<>();
 //        while (arvoreDados.)
 

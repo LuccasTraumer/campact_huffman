@@ -29,31 +29,6 @@ public class No implements Comparable<No> {
         return auxiliar;
     }
 
-    static No gerarNoBase(int indice, List<Ocorrencia> auxiliar) throws Exception {
-        No noBase = null;
-
-        if (auxiliar.get(indice) != null && auxiliar.get(indice+1)!= null) {
-            Ocorrencia ocorrenciaAtual = auxiliar.get(indice);
-            Ocorrencia proximoOcorrencia = auxiliar.get(indice + 1);
-            int quantasOcorrenciasComMenorValor = Utils.quantasOcorrenciasComMenorValor(Ocorrencia.qualMenorOcorrencia(auxiliar), auxiliar);
-            if (ocorrenciaAtual.getOcorrencia() == proximoOcorrencia.getOcorrencia()) {
-                Ocorrencia ocorrenciaRaiz = new Ocorrencia(ocorrenciaAtual.getOcorrencia() + proximoOcorrencia.getOcorrencia());
-                noBase = new No(ocorrenciaRaiz);
-                noBase.setDireita(new No(proximoOcorrencia));
-                noBase.setEsquerda(new No(ocorrenciaAtual));
-            } else if (auxiliar.get(indice) != null) {
-                noBase = new No(auxiliar.get(indice));
-            }
-            if (quantasOcorrenciasComMenorValor == 1 && ocorrenciaAtual.getOcorrencia() != proximoOcorrencia.getOcorrencia()) {
-                Ocorrencia ocorrenciaRaiz = new Ocorrencia(ocorrenciaAtual.getOcorrencia() + proximoOcorrencia.getOcorrencia());
-                noBase = new No(ocorrenciaRaiz);
-                noBase.setDireita(new No(proximoOcorrencia));
-                noBase.setEsquerda(new No(ocorrenciaAtual));
-            }
-        }
-        return noBase;
-    }
-
      public void setInformacao(Ocorrencia informacao){ this.informacao = informacao;}
    
      public void setDireita(No direita) { this.direita = direita;}
