@@ -45,8 +45,8 @@ public class TabelaHuff {
                 arvore.remove(segundoElemento);
                 if (primeiroElemento.getRaiz().getInformacao().getOcorrencia() == segundoElemento.getRaiz().getInformacao().getOcorrencia()) {
                     novaArvore.incluir(new No(new Ocorrencia(segundoElemento.getRaiz().getInformacao().getOcorrencia() + primeiroElemento.getRaiz().getInformacao().getOcorrencia())));
-                    novaArvore.getRaiz().setDireita(new No(primeiroElemento.getRaiz().getInformacao()));
-                    novaArvore.getRaiz().setEsquerda(new No(segundoElemento.getRaiz().getInformacao()));
+                    novaArvore.getRaiz().setDireita(new No(primeiroElemento.getRaiz()));
+                    novaArvore.getRaiz().setEsquerda(new No(segundoElemento.getRaiz()));
                     arvore.add(novaArvore);
                     arvore.sort(Comparator.comparing(Arvore::getRaiz));
                 } else if (quantasOcorrenciasComMenorValor == 1 &&
