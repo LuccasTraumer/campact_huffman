@@ -56,55 +56,11 @@ public class Arvore {
                 somaTudo(Raiz.getDireita()) + Raiz.getInformacao().getOcorrencia();
      }
 
-    private static List<Arvore> gerarArvoresPopular(ListaDados listaEmNo) {
-         List<Arvore> auxiliar = new ArrayList<>();
-        for (No no: listaEmNo.getListaRegistros()) {
-            Arvore novaArvore = new Arvore();
-            novaArvore.incluir(no);
-            auxiliar.add(novaArvore);
-        }
-        return auxiliar;
-    }
-
-    private static List<Arvore> removerArvoreNoLista(No nopBase, List<Arvore> arvores) {
-        Arvore dadoDireita = new Arvore();
-        Arvore dadoEsquerda = new Arvore();
-        if (nopBase != null && !arvores.isEmpty()) {
-            if (nopBase.getDireita() != null && nopBase.getEsquerda() != null) {
-                 dadoDireita.incluir(nopBase.getDireita());
-                 dadoEsquerda.incluir(nopBase.getEsquerda());
-             }
-             if (existeArvoreIgual(dadoDireita, arvores))
-                 arvores = removerArvore(dadoDireita, arvores);
-             if (existeArvoreIgual(dadoEsquerda, arvores))
-                 arvores = removerArvore(dadoEsquerda, arvores);
-         }
-        return arvores;
-    }
-
-    private static List<Arvore> removerArvore(Arvore dado, List<Arvore> arvores) {
-        List<Arvore> auxiliar = new ArrayList<>();
-        for (Arvore arv: arvores) {
-            if (!dado.getRaiz().getInformacao().equals(arv.raiz.getInformacao())) {
-                auxiliar.add(arv);
-            }
-        }
-        return auxiliar;
-    }
-
-    private static boolean existeArvoreIgual(Arvore dado, List<Arvore> arvores) {
-        for (Arvore auxiliar: arvores) {
-            if (dado.getRaiz().getInformacao().equals(auxiliar.raiz.getInformacao()))
-                return true;
-        }
-        return false;
-    }
-
     public String toString(){
          return visita(this.raiz);
      }
 
-     private String visita(No Raiz){  // InOrdem
+    public String visita(No Raiz){  // InOrdem
 
           if (Raiz == null) return "";
 
@@ -112,4 +68,22 @@ public class Arvore {
                  Raiz.getInformacao() + " " +     // IN-ORDEM
                  visita(Raiz.getDireita());
      }
+
+    public CodigoBinario criaCodigoBinario() throws Exception {
+         String sequenciaBinario = "";
+        return percorreArvore(this.raiz, sequenciaBinario);
+    }
+
+    private CodigoBinario percorreArvore(No raiz, String sequenciaBinaria) throws Exception {
+        if (raiz==null)
+            return null;
+        if ((raiz.getEsquerda()==null) && (raiz.getDireita()==null))  // Folha
+            return new CodigoBinario((char) raiz.getInformacao().getOcorrencia(), sequenciaBinaria);
+
+            if (raiz.getEsquerda() != null)
+                return percorreArvore(raiz.getEsquerda(), sequenciaBinaria+="0");
+
+            return raiz.getDireita() != null ? percorreArvore(raiz.getDireita(), sequenciaBinaria+= "1") : new CodigoBinario(raiz.getInformacao().getCaracter(), sequenciaBinaria);
+    }
+
 }

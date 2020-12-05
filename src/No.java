@@ -17,18 +17,6 @@ public class No implements Comparable<No> {
          this.esquerda = this.direita = null;
      }
 
-    /**
-     * Gera Arvore Binario. Vai criando o Nó que tem como ocorrencia a soma das folhas.
-     * */
-    static ListaDados geraListaNo(List<Ocorrencia> ocorrencias) throws Exception {
-        ListaDados auxiliar = new ListaDados();
-        for (Ocorrencia ocorrencia: ocorrencias) {
-            No no = new No(ocorrencia);
-            auxiliar.incluirNo(no);
-        }
-        return auxiliar;
-    }
-
      public void setInformacao(Ocorrencia informacao){ this.informacao = informacao;}
    
      public void setDireita(No direita) { this.direita = direita;}

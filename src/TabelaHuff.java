@@ -12,6 +12,8 @@ public class TabelaHuff {
     private No inicio;
     private List<Ocorrencia> tabela = new ArrayList<>();
     private List<Arvore> arvore = new ArrayList<>();
+    private final int PRIMEIRA_POSICAO = 0;
+    private final int SEGUNDA_POSICAO = 1;
 
 
     public TabelaHuff(List<Ocorrencia> listaOcorrencia) {
@@ -32,12 +34,10 @@ public class TabelaHuff {
     }
 
     public List<Arvore> gerarArvore() throws Exception {
-        int primeiraPosicao = 0;
-        int segundaPosicao = 1;
         while (arvore.size() != 1) {
-            if (arvore.get(primeiraPosicao) != null && arvore.get(segundaPosicao) != null) {
-                Arvore primeiroElemento = arvore.get(primeiraPosicao);
-                Arvore segundoElemento = arvore.get(segundaPosicao);
+            if (arvore.get(PRIMEIRA_POSICAO) != null && arvore.get(SEGUNDA_POSICAO) != null) {
+                Arvore primeiroElemento = arvore.get(PRIMEIRA_POSICAO);
+                Arvore segundoElemento = arvore.get(SEGUNDA_POSICAO);
                 Arvore novaArvore = new Arvore();
                 int menorOcorrencia = Ocorrencia.qualMenorOcorrencia(arvore);
                 int quantasOcorrenciasComMenorValor = Utils.quantasOcorrenciasComMenorValor(menorOcorrencia, arvore);
@@ -45,7 +45,7 @@ public class TabelaHuff {
                 arvore.remove(segundoElemento);
                 if (primeiroElemento.getRaiz().getInformacao().getOcorrencia() == segundoElemento.getRaiz().getInformacao().getOcorrencia()) {
                     novaArvore.incluir(new No(new Ocorrencia(segundoElemento.getRaiz().getInformacao().getOcorrencia() + primeiroElemento.getRaiz().getInformacao().getOcorrencia())));
-                    novaArvore.getRaiz().setDireita(new No(primeiroElemento.getRaiz()));
+                    novaArvore.getRaiz().setDireita(new No(primeiroElemento.getRaiz().getInformacao()));
                     novaArvore.getRaiz().setEsquerda(new No(segundoElemento.getRaiz().getInformacao()));
                     arvore.add(novaArvore);
                     arvore.sort(Comparator.comparing(Arvore::getRaiz));
@@ -59,7 +59,8 @@ public class TabelaHuff {
                 }
             }
         }
-        return arvore;
+        List<Arvore> clone = new ArrayList<>(arvore);
+        return clone;
     }
 
     @Override

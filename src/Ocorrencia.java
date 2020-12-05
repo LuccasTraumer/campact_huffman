@@ -36,15 +36,6 @@ public class Ocorrencia implements Comparable {
         return ocorrencias;
     }
 
-    static int quantasRegistrosCom(int menorOcorrencia, List<Ocorrencia> lista) {
-        int contador = 0;
-        for (Ocorrencia ocorrencia: lista) {
-            if (ocorrencia.getOcorrencia() == menorOcorrencia)
-                contador++;
-        }
-        return contador;
-    }
-
     static int qualMenorOcorrencia(List<Arvore> listaArvores) {
         int value = Integer.MAX_VALUE;
         for (Arvore arvore: listaArvores) {
@@ -52,22 +43,6 @@ public class Ocorrencia implements Comparable {
                 value = arvore.getRaiz().getInformacao().getOcorrencia();
         }
         return value;
-    }
-
-    static List<Ocorrencia> removerNoLista(No no, List<Ocorrencia> listaOcorrencias) {
-        if (no != null && !listaOcorrencias.isEmpty() && listaOcorrencias.size() > 1){
-            if (no.getEsquerda() != null) {
-                if (listaOcorrencias.contains(no.getEsquerda().getInformacao()))
-                    listaOcorrencias.remove(no.getEsquerda().getInformacao());
-            }
-        }
-        if (no != null && !listaOcorrencias.isEmpty() && listaOcorrencias.size() > 1){
-            if (no.getDireita() != null) {
-                if (listaOcorrencias.contains(no.getDireita().getInformacao()))
-                    listaOcorrencias.remove(no.getDireita().getInformacao());
-            }
-        }
-        return listaOcorrencias;
     }
 
     public char getCaracter() {
