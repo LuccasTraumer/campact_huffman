@@ -63,6 +63,16 @@ public class TabelaHuff {
         return clone;
     }
 
+    public List<Arvore> getArvore() {
+        List<Arvore> clone = new ArrayList<>(arvore);
+        return clone;
+    }
+
+    public List<Ocorrencia> getOcorrencia() {
+        List<Ocorrencia> clone = new ArrayList<>(tabela);
+        return clone;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

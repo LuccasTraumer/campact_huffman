@@ -19,17 +19,15 @@ public class Huff {
         // gera Arvore com as sub-arvores
         tabelaHuff.gerarArvore();
         // gerar os códigos "BINARIO" para cada caracter em uma Lista
-        List<CodigoBinario> listaCodigoBinario = gerarBinarios(tabelaHuff.gerarArvore());
+        List<CodigoBinario> listaCodigoBinario = gerarBinarios(tabelaHuff);
         // releitura do texto convertendo pra codigo binário no BitSet
     }
 
-    private static List<CodigoBinario> gerarBinarios(List<Arvore> arvoreDados) throws Exception {
+    private static List<CodigoBinario> gerarBinarios(TabelaHuff tabelaHuff) throws Exception {
         List<CodigoBinario> auxiliar = new ArrayList<>();
-        int index = 0;
-        while(auxiliar.size() != arvoreDados.size()) {
-            auxiliar.add(arvoreDados.get(index).criaCodigoBinario());
-            index++;
-        }
+
+        tabelaHuff.getArvore().get(0).criaCodigoBinario();
+        auxiliar = tabelaHuff.getArvore().get(0).getListaSquenciaBinaria();
         return auxiliar;
     }
 

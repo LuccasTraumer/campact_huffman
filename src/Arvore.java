@@ -9,6 +9,13 @@ import java.util.List;
  * */
 public class Arvore {
      private No raiz;
+
+    private List<CodigoBinario> auxiliar = new ArrayList<>();
+
+    public List<CodigoBinario> getListaSquenciaBinaria() {
+        List<CodigoBinario> aux = new ArrayList<>(auxiliar);
+        return aux;
+    }
      
      public No getRaiz(){
          return this.raiz;
@@ -75,15 +82,22 @@ public class Arvore {
     }
 
     private CodigoBinario percorreArvore(No raiz, String sequenciaBinaria) throws Exception {
+
+
         if (raiz==null)
             return null;
-        if ((raiz.getEsquerda()==null) && (raiz.getDireita()==null))  // Folha
-            return new CodigoBinario((char) raiz.getInformacao().getOcorrencia(), sequenciaBinaria);
+        if (raiz.getEsquerda() == null || raiz.getDireita() == null) {
+            auxiliar.add(new CodigoBinario(raiz.getInformacao().getCaracter(), sequenciaBinaria));
+            return new CodigoBinario(raiz.getInformacao().getCaracter(), sequenciaBinaria);
 
-            if (raiz.getEsquerda() != null)
-                return percorreArvore(raiz.getEsquerda(), sequenciaBinaria+="0");
+        }
+        else {
+            percorreArvore(raiz.getEsquerda(), sequenciaBinaria += "0");
+            sequenciaBinaria = sequenciaBinaria.substring(0, sequenciaBinaria.length()-1);
+            percorreArvore(raiz.getDireita(), sequenciaBinaria += "1");
+        }
 
-            return raiz.getDireita() != null ? percorreArvore(raiz.getDireita(), sequenciaBinaria+= "1") : new CodigoBinario(raiz.getInformacao().getCaracter(), sequenciaBinaria);
+        return null;
     }
 
 }
