@@ -21,6 +21,7 @@ public class Huff {
         // gerar os códigos "BINARIO" para cada caracter em uma Lista
         List<CodigoBinario> listaCodigoBinario = gerarBinarios(tabelaHuff);
         // releitura do texto convertendo pra codigo binário no BitSet
+        manipulacaoArquivo.gerarArquivoSaida(listaCodigoBinario);
     }
 
     private static List<CodigoBinario> gerarBinarios(TabelaHuff tabelaHuff) throws Exception {

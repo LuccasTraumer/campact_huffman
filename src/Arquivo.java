@@ -1,6 +1,5 @@
-import java.io.BufferedInputStream;
-import java.io.DataInputStream;
-import java.io.FileInputStream;
+import java.io.*;
+import java.util.List;
 
 /**
  * Curso: Desenvolvimento de Sistemas
@@ -50,5 +49,26 @@ public class Arquivo {
 
     public void setArquivoSaida(String arquivoSaida) {
         this.arquivoSaida = arquivoSaida;
+    }
+
+    public void gerarArquivoSaida(List<CodigoBinario> listaBinarios) {
+        final File test = new File(arquivoSaida);
+        try {
+            if (!test.createNewFile() || !test.exists()) {
+                FileWriter myWriter = new FileWriter(arquivoSaida);
+                for (CodigoBinario cod : listaBinarios) {
+                    myWriter.write(cod.getCaracter() + " = " + cod.getSequenciaBinaria() + ", ");
+                }
+                myWriter.close();
+            } else {
+                final FileWriter myWriter = new FileWriter(test.getName());
+                for (CodigoBinario cod : listaBinarios) {
+                    myWriter.write(cod.getCaracter() + " = " + cod.getSequenciaBinaria() + ", ");
+                }
+                myWriter.close();
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
