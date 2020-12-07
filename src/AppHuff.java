@@ -12,7 +12,7 @@ public class AppHuff {
     public static void main(String[] args) throws Exception{
 
         System.out.println("Vamos compactar ou descompactar?");
-        Huff.compactar("textos/testeSimples.txt", "textos/fileOut.txt");
+        Huff.compactar("textos/fileIn.txt", "textos/fileOut.txt");
         Huff.descompactar("Poesia.huff","Poesia_des.txt");
         
         

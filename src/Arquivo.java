@@ -71,9 +71,6 @@ public class Arquivo {
                 for (CodigoBinario cod : textoInOrdem) {
                     myWriter.write(cod.getSequenciaBinaria());
                 }
-                for (CodigoBinario cod: textoInOrdem) {
-                    myWriter.write(cod.getCaracter());
-                }
                 myWriter.close();
             } else {
                 final FileWriter myWriter = new FileWriter(test.getName());
