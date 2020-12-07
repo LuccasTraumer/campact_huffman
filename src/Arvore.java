@@ -64,16 +64,17 @@ public class Arvore {
      }
 
     public String toString(){
-         return visita(this.raiz);
+         return visita(this.raiz, "");
      }
 
-    public String visita(No Raiz){  // InOrdem
+    public String visita(No Raiz, String seq){  // InOrdem
 
           if (Raiz == null) return "";
 
-          return visita(Raiz.getEsquerda()) + " " +
+        System.out.println(seq);
+          return visita(Raiz.getEsquerda(), seq+="0") + " " +
                  Raiz.getInformacao() + " " +     // IN-ORDEM
-                 visita(Raiz.getDireita());
+                 visita(Raiz.getDireita(), seq+="1");
      }
 
     public CodigoBinario criaCodigoBinario() throws Exception {
@@ -93,8 +94,8 @@ public class Arvore {
         }
         else {
             percorreArvore(raiz.getEsquerda(), sequenciaBinaria += "0");
-            sequenciaBinaria = sequenciaBinaria.substring(0, sequenciaBinaria.length()-1);
             percorreArvore(raiz.getDireita(), sequenciaBinaria += "1");
+            System.out.println(visita(raiz, ""));
         }
 
         return null;

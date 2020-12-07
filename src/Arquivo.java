@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -51,19 +52,30 @@ public class Arquivo {
         this.arquivoSaida = arquivoSaida;
     }
 
-    public void gerarArquivoSaida(List<CodigoBinario> listaBinarios) {
+    public void gerarArquivoSaida(List<CodigoBinario> listaBinarios, Arquivo arquivo) {
         final File test = new File(arquivoSaida);
+        List<CodigoBinario> textoInOrdem = new ArrayList<>();
+
+        for (byte caracter: arquivo.vetByte) {
+            for (CodigoBinario cod: listaBinarios) {
+                if (cod.getCaracter() == caracter) {
+                    textoInOrdem.add(cod);
+                    break;
+                }
+            }
+        }
+
         try {
             if (!test.createNewFile() || !test.exists()) {
                 FileWriter myWriter = new FileWriter(arquivoSaida);
-                for (CodigoBinario cod : listaBinarios) {
-                    myWriter.write(cod.getCaracter() + " = " + cod.getSequenciaBinaria() + ", ");
+                for (CodigoBinario cod : textoInOrdem) {
+                    myWriter.write(cod.getSequenciaBinaria());
                 }
                 myWriter.close();
             } else {
                 final FileWriter myWriter = new FileWriter(test.getName());
-                for (CodigoBinario cod : listaBinarios) {
-                    myWriter.write(cod.getCaracter() + " = " + cod.getSequenciaBinaria() + ", ");
+                for (CodigoBinario cod : textoInOrdem) {
+                    myWriter.write(cod.getSequenciaBinaria());
                 }
                 myWriter.close();
             }

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
@@ -33,6 +34,7 @@ public class Ocorrencia implements Comparable {
             if(!ocorrencias.contains(ocorrenciaAuxiliar))
                 ocorrencias.add(new Ocorrencia(caracter,Utils.quntasOcorrenciasDaLetra(caracter, arquivo)));
         }
+        ocorrencias.sort(Comparator.comparing(Ocorrencia::getOcorrencia));
         return ocorrencias;
     }
 
