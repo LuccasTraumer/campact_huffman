@@ -69,13 +69,14 @@ public class Arvore {
 
     public String visita(No Raiz, String seq){  // InOrdem
 
-          if (Raiz == null) return "";
+          if (Raiz == null)
+              return "";
 
-        System.out.println(seq);
           return visita(Raiz.getEsquerda(), seq+="0") + " " +
                  Raiz.getInformacao() + " " +     // IN-ORDEM
                  visita(Raiz.getDireita(), seq+="1");
      }
+
 
     public CodigoBinario criaCodigoBinario() throws Exception {
          String sequenciaBinario = "";
@@ -83,7 +84,6 @@ public class Arvore {
     }
 
     private CodigoBinario percorreArvore(No raiz, String sequenciaBinaria) throws Exception {
-
 
         if (raiz==null)
             return null;
@@ -95,7 +95,6 @@ public class Arvore {
         else {
             percorreArvore(raiz.getEsquerda(), sequenciaBinaria += "0");
             percorreArvore(raiz.getDireita(), sequenciaBinaria += "1");
-            System.out.println(visita(raiz, ""));
         }
 
         return null;
