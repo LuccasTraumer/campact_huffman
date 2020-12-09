@@ -1,3 +1,9 @@
+package ocorrencia;
+
+import arquivo.Arquivo;
+import arvore.Arvore;
+import utils.Utils;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -25,20 +31,20 @@ public class Ocorrencia implements Comparable {
     }
 
     /**
-     * Cria a tabela Binaria Caracter e Ocorrencia.
+     * Cria a tabela Binaria Caracter e ocorrencia.Ocorrencia.
      * */
     public static List<Ocorrencia> gerarListaOcorrencias(Arquivo arquivo) throws Exception {
         List<Ocorrencia> ocorrencias = new ArrayList<>();
         for (char caracter: new String(arquivo.getCaracteres()).toCharArray()) {
-            Ocorrencia ocorrenciaAuxiliar = new Ocorrencia(caracter,Utils.quntasOcorrenciasDaLetra(caracter, arquivo));
+            Ocorrencia ocorrenciaAuxiliar = new Ocorrencia(caracter, Utils.quntasOcorrenciasDaLetra(caracter, arquivo));
             if(!ocorrencias.contains(ocorrenciaAuxiliar))
-                ocorrencias.add(new Ocorrencia(caracter,Utils.quntasOcorrenciasDaLetra(caracter, arquivo)));
+                ocorrencias.add(new Ocorrencia(caracter, Utils.quntasOcorrenciasDaLetra(caracter, arquivo)));
         }
         ocorrencias.sort(Comparator.comparing(Ocorrencia::getOcorrencia));
         return ocorrencias;
     }
 
-    static int qualMenorOcorrencia(List<Arvore> listaArvores) {
+    public static int qualMenorOcorrencia(List<Arvore> listaArvores) {
         int value = Integer.MAX_VALUE;
         for (Arvore arvore: listaArvores) {
             if (arvore.getRaiz().getInformacao().getOcorrencia() < value)
@@ -66,7 +72,7 @@ public class Ocorrencia implements Comparable {
         if (ocorrencia != 0) {
             this.ocorrencia = ocorrencia;
         } else {
-            throw new Exception("Ocorrencia Invalidá!");
+            throw new Exception("ocorrencia.Ocorrencia Invalidá!");
         }
     }
 

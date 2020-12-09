@@ -1,0 +1,10 @@
+
+S	java:S106"9Replace this use of System.out or System.err by a logger.(Í–Ííûÿÿÿÿ
+0
+java:S1220""Move this file to a named package.
+G
+java:S1128"1Remove this unused import 'java.util.Comparator'.(î¹ó¹
+F
+java:S1128"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒ
+F
+java:S1128"+Remove this unused import 'java.util.List'.(Õë±Äøÿÿÿÿ

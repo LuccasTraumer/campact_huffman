@@ -1,0 +1,13 @@
+
+0
+java:S1220""Move this file to a named package.
+c
+java:S2095F"HUse try-with-resources or close this "FileWriter" in a "finally" clause.(ïÓù“şÿÿÿÿ
+e
+java:S2674 "JCheck the return value of the "read" call to see how many bytes were read.(æÂ ©ûÿÿÿÿ
+[	java:S112"FDefine and throw a dedicated exception instead of using a generic one.(õÍ«Ì
+S
+java:S1197"8Move the array designator from the variable to the type.(Â²œÄüÿÿÿÿ
+^
+java:S2095L"HUse try-with-resources or close this "FileWriter" in a "finally" clause.(ç°úÈ
+S	java:S106S"9Replace this use of System.out or System.err by a logger.(©şêÜúÿÿÿÿ

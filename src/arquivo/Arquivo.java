@@ -1,3 +1,7 @@
+package arquivo;
+
+import tabelaBinaria.CodigoBinario;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +24,6 @@ public class Arquivo {
     public Arquivo(String arquivoEntrada, String arquivoSaida) throws Exception {
         this.arquivoEntrada = arquivoEntrada;
         this.arquivoSaida = arquivoSaida;
-
         arquivoTexto = new FileInputStream(arquivoEntrada);
         buffReader = new BufferedInputStream(arquivoTexto);
         data = new DataInputStream(buffReader);
@@ -52,7 +55,39 @@ public class Arquivo {
         this.arquivoSaida = arquivoSaida;
     }
 
-    public void gerarArquivoSaida(List<CodigoBinario> listaBinarios, Arquivo arquivo) {
+    public void gerarArquivoSaidaCompactado(List<CodigoBinario> listaBinarios, Arquivo arquivo) {
+        final File test = new File(arquivoSaida);
+        List<CodigoBinario> textoInOrdem = new ArrayList<>();
+
+        for (byte caracter: arquivo.vetByte) {
+            for (CodigoBinario cod: listaBinarios) {
+                if (cod.getCaracter() == caracter) {
+                    textoInOrdem.add(cod);
+                    break;
+                }
+            }
+        }
+
+        try {
+            if (!test.createNewFile() || !test.exists()) {
+                FileWriter myWriter = new FileWriter(arquivoSaida);
+                for (CodigoBinario cod : textoInOrdem) {
+                    myWriter.write(cod.getSequenciaBinaria());
+                }
+                myWriter.close();
+            } else {
+                final FileWriter myWriter = new FileWriter(test.getName());
+                for (CodigoBinario cod : textoInOrdem) {
+                    myWriter.write(cod.getSequenciaBinaria());
+                }
+                myWriter.close();
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void gerarArquivoSaidaDescompactado(List<CodigoBinario> listaBinarios, Arquivo arquivo) {
         final File test = new File(arquivoSaida);
         List<CodigoBinario> textoInOrdem = new ArrayList<>();
 

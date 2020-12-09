@@ -1,3 +1,9 @@
+package arvore;
+
+import informacao.No;
+import ocorrencia.Ocorrencia;
+import tabelaBinaria.CodigoBinario;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -27,7 +33,7 @@ public class Arvore {
 
      public void incluir (No novo){
          if (novo==null) return;
-         if (this.raiz == null)  // primeiro No  (incluir no Nivel ZERO)
+         if (this.raiz == null)  // primeiro informacao.No  (incluir no Nivel ZERO)
               this.raiz = novo;
          else
              incluir(this.raiz, novo);

@@ -1,4 +1,8 @@
-import java.util.ArrayList;
+package tabelaBinaria;
+
+
+import informacao.No;
+
 import java.util.Objects;
 
 public class TabelaBinaria {
@@ -19,7 +23,7 @@ public class TabelaBinaria {
         if (informacao != null)
             this.informacao = (No)informacao.clone();
         else
-            throw new Exception("Objeto No Invalido");
+            throw new Exception("Objeto informacao.No Invalido");
     }
 
     public byte getBinario() {

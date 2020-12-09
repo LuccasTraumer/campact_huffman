@@ -1,3 +1,8 @@
+package utils;
+
+import arquivo.Arquivo;
+import arvore.Arvore;
+
 import java.util.List;
 
 public class Utils {
@@ -13,7 +18,7 @@ public class Utils {
         return contadorOcorrencia;
     }
 
-    static int quantasOcorrenciasComMenorValor(int menorValor, List<Arvore> listaArvores) {
+    public static int quantasOcorrenciasComMenorValor(int menorValor, List<Arvore> listaArvores) {
         int count = 0;
         for (Arvore arvore: listaArvores) {
             if (arvore.getRaiz().getInformacao().getOcorrencia() == menorValor)

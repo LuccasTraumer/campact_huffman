@@ -1,3 +1,5 @@
+package tabelaBinaria;
+
 import java.util.Objects;
 
 public class CodigoBinario {
@@ -31,7 +33,7 @@ public class CodigoBinario {
 
     @Override
     public String toString() {
-        return "CodigoBinario{" +
+        return "tabelaBinaria.CodigoBinario{" +
                 "caracter=" + caracter +
                 ", sequenciaBinaria='" + sequenciaBinaria + '\'' +
                 '}';

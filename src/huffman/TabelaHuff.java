@@ -1,3 +1,10 @@
+package huffman;
+
+import arvore.Arvore;
+import informacao.No;
+import ocorrencia.Ocorrencia;
+import utils.Utils;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -88,7 +95,7 @@ public class TabelaHuff {
 
     @Override
     public String toString() {
-        return "TabelaHuff{" +
+        return "huffman.TabelaHuff{" +
                 "inicio=" + inicio +
                 '}';
     }

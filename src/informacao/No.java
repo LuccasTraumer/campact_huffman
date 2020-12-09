@@ -1,4 +1,6 @@
-import java.util.List;
+package informacao;
+
+import ocorrencia.Ocorrencia;
 
 /**
  * Curso: Desenvolvimento de Sistemas
@@ -9,7 +11,7 @@ public class No implements Comparable<No> {
         
      private Ocorrencia informacao;
      
-     private No esquerda, direita;   // Arvore
+     private No esquerda, direita;   // arvore.Arvore
 
      
      public No(Ocorrencia info){
