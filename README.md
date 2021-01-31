@@ -8,3 +8,6 @@ The algorithm is based in Huffman Compression. Using the occurrence of each char
 
 
 Everthing yo0u will need is a text file and select him, and select the out file.
+
+The logic behind the code, simplificated.
+![Image of my web page](https://raw.githubusercontent.com/LuccasTraumer/campact_huffman/main/1000px-Huffman_tree.svg.png)
